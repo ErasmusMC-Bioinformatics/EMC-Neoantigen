@@ -30,3 +30,4 @@ assets/hlahdenv.yml
 bin/make_release.sh
 test.nf
 resources/
+batchFile_TESLA.csv
