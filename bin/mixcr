@@ -69,7 +69,8 @@ function calculateMaxMb() {
     maxMb=$(((freeMb + inactiveMb - delta)))
     ;;
   Linux)
-    rFreeMb=$(free -m | grep Mem | awk '{ print $4 }')
+    # 7 is available
+    rFreeMb=$(free -m | grep Mem | awk '{ print $7 }')
     maxMb=$((rFreeMb - delta))
     ;;
   FreeBSD)
@@ -112,7 +113,7 @@ altJar=""
 
 inDocker=false
 
-if [[ -f /proc/1/cgroup ]] && grep docker /proc/1/cgroup -qa; then
+if [[ -f /proc/1/cgroup ]] && grep docker /proc/1/cgroup -qa || [[ -f /.dockerenv ]]; then
   inDocker=true
 fi
 
@@ -158,12 +159,30 @@ if [[ ${needXmxXms} == true ]]; then
       targetXmx=$maxMb
     fi
 
+    memoryConsumingCommands=("analyze" "refineTagsAndSort" "assemblePartial" "assemble" "findShmTrees" "postanalysis" "downsampling")
+    needWarn=false
+    for mcmd in "${memoryConsumingCommands[@]}"; do
+      if [[ " ${appArgs[*]} " =~ ${mcmd} ]]; then
+        needWarn=true
+        break
+      fi
+    done
+
+    if [[ ${needWarn} == true ]]; then
+      echo "IMPORTANT: MiXCR will use at most ${targetXmx}MB of RAM," >&2
+      echo "           use -Xmx to change automatically set heap size (i.e. -Xmx50g to set heap size to 50 Gb)" >&2
+    fi
+
     javaArgs+=("-Xmx${targetXmx}m")
 
     targetXms=$((targetXmx * 2 / 3))
 
     if [[ $targetXms -lt 2000 ]]; then
       targetXms=$targetXmx
+    fi
+
+    if [[ $targetXms -gt 6000 ]]; then
+      targetXms="6000"
     fi
 
     javaArgs+=("-Xms${targetXms}m")
@@ -180,7 +199,7 @@ if [[ -z "$altJar" ]]; then
     fi
   done
 else
-  for j in $(ls -1 "${dir}"/* | grep "${app}" | grep ".jar" | grep "${altJar}"); do
+  for j in $(ls -1 "${dir}"/* | grep "${app}-${altJar}.jar"); do
     if [[ -e "$j" ]]; then
       jar=$j
       break

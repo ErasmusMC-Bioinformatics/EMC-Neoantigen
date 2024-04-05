@@ -1,0 +1,10 @@
+sampleName,reads1,reads2,sampleType,HLAfile,sex
+TESLA_ID4,/data/willem/TESLA phase 1 data release/melanoma 2/patient04_normal.fastq,,normal_DNA,,
+TESLA_ID4,/data/willem/TESLA phase 1 data release/melanoma 2/patient04_tumor.fastq,,tumor_DNA,,
+TESLA_ID4,/data/willem/TESLA phase 1 data release/melanoma 2/patient04_tumor_rna_1.fq.gz,/data/willem/TESLA phase 1 data release/melanoma 2/patient04_tumor_rna_2.fq.gz,tumor_RNA,,
+TESLA_ID8,/data/willem/TESLA phase 1 data release/melanoma 2/patient08_normal.fastq,,normal_DNA,,
+TESLA_ID8,/data/willem/TESLA phase 1 data release/melanoma 2/patient08_tumor.fastq,,tumor_DNA,,
+TESLA_ID8,/data/willem/TESLA phase 1 data release/melanoma 2/patient08_tumor_rna_1.fq,/data/willem/TESLA phase 1 data release/melanoma 2/patient08_tumor_rna_2.fq,tumor_RNA,,
+TESLA_ID9,/data/willem/TESLA phase 1 data release/melanoma 2/patient09_normal.fastq,,normal_DNA,,
+TESLA_ID9,/data/willem/TESLA phase 1 data release/melanoma 2/patient09_tumor.fastq,,tumor_DNA,,
+TESLA_ID9,/data/willem/TESLA phase 1 data release/melanoma 2/patient09_tumor_rna_1.fq,/data/willem/TESLA phase 1 data release/melanoma 2/patient09_tumor_rna_2.fq,tumor_RNA,,
