@@ -5529,13 +5529,13 @@ if(!iedb_chck_file.exists() || iedb_chck_file.isEmpty()) {
         export TMPDIR=${params.tmpDir}
 
         CWD=`pwd`
-        cd /opt/iedb/
+        cd ${params.databases.IEDB_dir}
         rm -f $mhci_file
         wget $iedb_MHCI_url
         tar -xzvf $mhci_file
         cd mhc_i
         bash -c "./configure"
-        cd /opt/iedb/
+        cd ${params.databases.IEDB_dir}
         rm -f $mhci_file
 
         rm -f $mhcii_file
@@ -5546,7 +5546,7 @@ if(!iedb_chck_file.exists() || iedb_chck_file.isEmpty()) {
         ####            to be fixed, skip unittests for now
         # cd mhc_ii
         # bash -c "python ./configure.py"
-        cd /opt/iedb/
+        cd ${params.databases.IEDB_dir}
         rm $mhcii_file
 
         export MHCFLURRY_DATA_DIR=/opt/mhcflurry_data
@@ -5644,7 +5644,7 @@ process 'pVACseq' {
 
     """
     pvacseq run \\
-        --iedb-install-directory /opt/iedb \\
+        --iedb-install-directory ${params.databases.IEDB_dir} \\
         -t ${task.cpus} \\
         ${phased_vcf_opt} \\
         -e1 ${params.mhci_epitope_len} \\

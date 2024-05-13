@@ -1,5 +1,5 @@
 
-conda create -y -n nf-env -c conda-forge -c bioconda openjdk==11.0.20 singularity nextflow=22.10.0 git bowtie2 cxx-compiler
+conda create -y -n nf-env -c conda-forge -c bioconda openjdk==11.0.20 singularity nextflow=22.10.0 git bowtie2 cxx-compiler glpk graphviz 
 
 conda activate nf-env
 
@@ -29,3 +29,5 @@ export NXF_WORK=/mnt/FS2/data_1/TESLA-Neoantigen/Tools/work
 ### 1.4 Testdata
 If you want to test the pipeline using a working minimal test dataset you may download one from
 <https://apps-01.i-med.ac.at/resources/nextneopi/nextNEOpi_testdata.tar.gz>
+
+nextflow run nextNEOpi.nf --batchFile TESLA_ID1.csv -profile singularity -config conf/params.config --accept_license
