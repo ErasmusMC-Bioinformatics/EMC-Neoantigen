@@ -12,4 +12,4 @@ bin/hlahd.1.7.0
 bin/*.jar
 
 *.csv
-output*/
+output*
