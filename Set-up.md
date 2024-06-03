@@ -1,5 +1,5 @@
 
-conda create -y -n nf-env -c conda-forge -c bioconda openjdk==11.0.20 singularity nextflow=22.10.0 git bowtie2 cxx-compiler glpk graphviz 
+conda create -y -n nf-env -c conda-forge -c bioconda openjdk==11.0.20 singularity nextflow=22.10.0 git bowtie2 cxx-compiler glpk graphviz mamba
 
 conda activate nf-env
 
@@ -20,14 +20,28 @@ sh install.sh
 
 Request license for mixcr https://licensing.milaboratories.com/
 
-export TMP="/mnt/FS2/data_1/TESLA-Neoantigen/Tools/nextNEOpie/tmp"
-export SINGULARITY_TMPDIR="/mnt/FS2/data_1/TESLA-Neoantigen/Tools/nextNEOpie/tmp"
-export NXF_SINGULARITY_CACHEDIR="/mnt/FS2/data_1/TESLA-Neoantigen/Tools/nextNEOpie/tmp" 
-export PATH=$PATH:/home/willem/EMC-Neoantigen/bin/hlahd.1.7.0/bin
-export NXF_WORK=/mnt/FS2/data_1/TESLA-Neoantigen/Tools/work
+export TMP="/mnt/FS2/data_2/Users/Willem/tmp"
+export SINGULARITY_TMPDIR="/mnt/FS2/data_2/Users/Willem/tmp"
+export NXF_SINGULARITY_CACHEDIR="/mnt/FS2/data_2/Users/Willem/tmp" 
+export PATH=$PATH:/mnt/FS2/data_2/Users/Willem/EMC-Neoantigen/bin/hlahd.1.7.0/bin
+
+<!-- NXF_WORK=/mnt/FS2/data_1/TESLA-Neoantigen/Tools/work -->
 
 ### 1.4 Testdata
 If you want to test the pipeline using a working minimal test dataset you may download one from
 <https://apps-01.i-med.ac.at/resources/nextneopi/nextNEOpi_testdata.tar.gz>
 
-nextflow run nextNEOpi.nf --batchFile TESLA_ID1.csv -profile singularity -config conf/params.config --accept_license
+tar -zxvf nextNEOpi_testdata.tar.gz
+
+# params.config
+  // Directories (need to be in quotes)
+  tmpDir          = "/mnt/FS2/data_2/Users/Willem/tmp"  // Please make sure that there is enough free space (~ 50G)
+  // workDir         = "/mnt/FS2/data_1/TESLA-Neoantigen/Tools/work"
+  outputDir       = "/mnt/FS2/data_1/TESLA-Neoantigen/Results"
+
+# Create singularity image
+sudo singularity build --sandbox pva_pvac_vt pva_pvac_vt.def
+sudo singularity build pva_pvac_vt.sif pva_pvac_vt
+cp pva_pvac_vt.sif apps-01.i-med.ac.at-images-singularity-pVACtools_4.0.1_icbi_4ae2625d.sif
+
+nextflow run nextNEOpi.nf --batchFile TESLA_ID1.csv -profile singularity -config conf/params.config --accept_license -resume

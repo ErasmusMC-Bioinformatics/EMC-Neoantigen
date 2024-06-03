@@ -1,0 +1,58 @@
+Bootstrap: docker
+From: griffithlab/pvactools:4.2.0
+
+
+%post
+    # update and install dependencies
+    apt-get update && apt-get install -y python3-pip python3-dev build-essential git wget cmake g++
+
+    # Install vatools
+    pip install vatools
+
+    # Install cyvcf2
+    pip install cyvcf2
+
+    # Install bgzip
+    pip install bgzip
+
+    # Download bam_readcount_helper.py script
+    wget https://raw.githubusercontent.com/griffithlab/pmbio.org/master/assets/scripts/bam_readcount_helper.py -O /usr/local/bin/bam_readcount_helper.py
+    chmod +x /usr/local/bin/bam_readcount_helper.py
+
+    # Install bam-readcount
+    git clone https://github.com/genome/bam-readcount
+    cd bam-readcount
+    mkdir build
+    cd build
+    cmake ..
+    make
+    cp /bam-readcount/build/bin/bam-readcount /usr/local/bin/
+    cd /
+
+    # Clean up
+    apt-get clean
+
+    # Install vt
+    git clone https://github.com/atks/vt.git
+    cd vt
+    git submodule update --init --recursive
+    make
+    make test
+    cd /
+
+    # Install samtools
+    wget https://github.com/samtools/htslib/releases/download/1.20/htslib-1.20.tar.bz2
+    tar -xvf htslib-1.20.tar.bz2
+    cd htslib-1.20    # and similarly for bcftools and htslib
+    ./configure --prefix=/usr/local
+    make
+    make install
+    cd / 
+
+%environment
+    export PATH=/usr/local/bin:$PATH
+    export PATH=/vt:$PATH
+
+%labels
+    Author Willem
+    Version 1.0
