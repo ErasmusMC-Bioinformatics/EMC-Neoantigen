@@ -20,10 +20,10 @@ sh install.sh
 
 Request license for mixcr https://licensing.milaboratories.com/
 
-export TMP="/mnt/FS2/data_2/Users/Willem/tmp"
-export SINGULARITY_TMPDIR="/mnt/FS2/data_2/Users/Willem/tmp"
-export NXF_SINGULARITY_CACHEDIR="/mnt/FS2/data_2/Users/Willem/tmp" 
-export PATH=$PATH:/mnt/FS2/data_2/Users/Willem/EMC-Neoantigen/bin/hlahd.1.7.0/bin
+export TMP="/mnt/SCS/data_2/Users/Willem/tmp"
+export SINGULARITY_TMPDIR="/mnt/SCS/data_2/Users/Willem/tmp"
+export NXF_SINGULARITY_CACHEDIR="/mnt/SCS/data_2/Users/Willem/tmp" 
+export PATH=$PATH:/mnt/SCS/data_2/Users/Willem/EMC-Neoantigen/bin/hlahd.1.7.0/bin
 
 <!-- NXF_WORK=/mnt/FS2/data_1/TESLA-Neoantigen/Tools/work -->
 
@@ -35,9 +35,9 @@ tar -zxvf nextNEOpi_testdata.tar.gz
 
 # params.config
   // Directories (need to be in quotes)
-  tmpDir          = "/mnt/FS2/data_2/Users/Willem/tmp"  // Please make sure that there is enough free space (~ 50G)
+  tmpDir          = "/mnt/SCS/data_2/Users/Willem/tmp"  // Please make sure that there is enough free space (~ 50G)
   // workDir         = "/mnt/FS2/data_1/TESLA-Neoantigen/Tools/work"
-  outputDir       = "/mnt/FS2/data_1/TESLA-Neoantigen/Results"
+  outputDir       = "/mnt/SCS/data_1/TESLA-Neoantigen/Results"
 
 # Create singularity image
 sudo singularity build --sandbox pva_pvac_vt pva_pvac_vt.def

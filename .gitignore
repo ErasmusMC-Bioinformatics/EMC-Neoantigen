@@ -10,6 +10,7 @@ assets/testdata
 
 bin/hlahd.1.7.0
 bin/*.jar
+bin/hlahd.1.7.0.tar.gz
 
 *.csv
 output*
